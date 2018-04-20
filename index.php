@@ -39,7 +39,6 @@ $(function(){
 		var html = "<table>";
 		$.post("formpost.php", $(".card").serialize(),function(data){
 			if (data.code==200) {
-//				alert(data.msg);
 				html += "<tr><td>原卡号: </td><td>"+data.data.bank_beati_card+"</td>";
 				html += "<tr><td>系统卡号: </td><td>"+data.data.bank_card+"</td>";
 				html += "<tr><td>银行代码: </td><td>"+data.data.bank_code+"</td>";
@@ -48,7 +47,11 @@ $(function(){
 				html += "<tr><td>卡片logo: </td><td><img src='"+data.data.bank_img+"' /></td>";
 				html += "</table>";
 				$("#result").html(html);
-			}
+			} else if (data.code==403){
+				alert(data.msg);
+			} else if (data.code==404){
+				alert(data.msg);
+			}	
 	   }, "json");
 	});	   
 });
