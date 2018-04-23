@@ -19,8 +19,12 @@ class CardInfo {
 		$url = "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo=";  
 	    $url .=$var;  
 	    $url .="&cardBinCheck=true"; 
-	    $curl_data = $this->curl_request($url);
+	    $curl_data = $this->curl_request($url); 
+
 	    $curl_data = json_decode($curl_data,true); 
+	    if ($curl_data['validated'] === FALSE) {
+	    	return array('code'=>'404','msg'=>'');
+	    }	    
 	    $cardtype = $this->card_type();	    
 	    $bank_name = $this->list->Banklist()[substr($var,0,6)];
 		preg_match('/([\d]{4})([\d]{4})([\d]{4})([\d]{4})([\d]{0,})?/', $var,$match);  	  
@@ -33,7 +37,7 @@ class CardInfo {
 	    	'bank_type' => $cardtype[$curl_data['cardType']],
 	    	'bank_img' => 'https://apimg.alipay.com/combo.png?d=cashier&t='.$curl_data['bank'],
 	    ); 
-	    return $print_data; 
+	    return array('code'=>'200','msg'=>$print_data); 
 	}
 
 	/**

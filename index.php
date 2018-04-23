@@ -47,6 +47,8 @@ $(function(){
 				html += "<tr><td>卡片logo: </td><td><img src='"+data.data.bank_img+"' /></td>";
 				html += "</table>";
 				$("#result").html(html);
+			} else if (data.code==402){
+				alert(data.msg);
 			} else if (data.code==403){
 				alert(data.msg);
 			} else if (data.code==404){

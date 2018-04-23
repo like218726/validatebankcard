@@ -12,7 +12,10 @@ if(preg_match("/^\d*$/",$bankcart)) {
 	} else {
 		$cardinfo = new cardinfo();		
 		$card = $cardinfo->getbankinfo($bankcart);
-		echo json_encode(array('code'=>'200','msg'=>'成功','data'=>$card));			
+		if ($card['code']==200)
+			echo json_encode(array('code'=>'200','msg'=>'成功','data'=>$card));	
+		else 
+			echo json_encode(array('code'=>'402','msg'=>'该卡号不是银行卡或者信用卡'));				
 	}	
 } else {
 	echo json_encode(array('code'=>'404','msg'=>'卡号不是数字'));
